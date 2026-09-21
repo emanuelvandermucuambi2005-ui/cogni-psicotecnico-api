@@ -7,6 +7,9 @@ export function buildApp(){
  const app=Fastify({logger:true});
  app.register(cors,{origin:true});
  app.get("/api/v1/health",async()=>({status:"ok",service:"cogni-psicotecnico-api",version:"1.0.0"}));
+
+ app.get("/api/v1/sync/progress/:userId",async(req,res)=>{const snapshot=getSnapshot((req.params as any).userId);if(!snapshot)return res.code(404).send({error:"NO_SYNC_DATA"});return snapshot;});
+ app.post("/api/v1/sync/progress/:userId",async(req)=>{const b=req.body as any;return mergeSnapshot((req.params as any).userId,{xp:Number(b.xp)||0,answered:Number(b.answered)||0,correct:Number(b.correct)||0,testsCompleted:Number(b.testsCompleted)||0,streak:Number(b.streak)||0});});
  app.get("/api/v1/categories",async()=>categories);
  app.get("/api/v1/levels",async()=>Array.from({length:10},(_,i)=>({level:i+1,xpRequired:i*500,title:i<2?"Iniciante":i<5?"Treinando":i<8?"Avançado":"Mestre"})));
  app.get("/api/v1/tests",async(req)=>{const q=req.query as {category?:string,level?:string}; return tests.filter(t=>(!q.category||t.category===q.category)&&(!q.level||t.level===Number(q.level)));});
