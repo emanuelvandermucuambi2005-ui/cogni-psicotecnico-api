@@ -1,4 +1,7 @@
 import Fastify from "fastify";
+import fastifyStatic from "@fastify/static";
+import {join} from "node:path";
+import {fileURLToPath} from "node:url";
 import cors from "@fastify/cors";
 import {categories,tests} from "./data.js";
 import {allQuestions,answerSession,createSession,getProgress,getQuestion,getSession,getTest,listSessions,soundEvents} from "./engine.js";
