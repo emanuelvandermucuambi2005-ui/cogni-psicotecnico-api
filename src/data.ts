@@ -72,3 +72,9 @@ for(let level=1;level<=10;level++){
  const qs=questions.filter(q=>q.level===level).map(q=>q.id);
  tests.push({id:`mixed-level-${level}`,title:`Desafio Misto • Nível ${level}`,category:"mixed",level,durationSec:qs.length*25,questionCount:qs.length,questionIds:qs,mode:"mixed" as any});
 }
+for(const base of [...tests]){
+ if(base.mode==="practice"||base.mode==="mixed"){
+  tests.push({...base,id:`${base.id}-timed`,title:`${base.title} • Cronometrado`,mode:"timed",durationSec:Math.max(20,base.durationSec)});
+  tests.push({...base,id:`${base.id}-mock`,title:`${base.title} • Simulado`,mode:"mock",durationSec:Math.max(20,base.durationSec)});
+ }
+}
