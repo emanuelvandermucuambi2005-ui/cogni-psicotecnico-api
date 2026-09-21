@@ -22,12 +22,12 @@ export interface Question {
 export interface TestDefinition {
   id:string;
   title:string;
-  category:CategoryId|"mixed";
+  category:CategoryId;
   level:number;
   durationSec:number;
   questionCount:number;
   questionIds:string[];
-  mode:"practice"|"timed"|"mock";
+  mode:"practice"|"timed"|"mock"|"mixed";
 }
 
 export interface Session {
@@ -42,5 +42,6 @@ export interface Session {
   correct:number;
   answered:number;
   streak:number;
+  bestStreak:number;
   finished:boolean;
 }
